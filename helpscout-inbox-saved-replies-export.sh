@@ -46,8 +46,8 @@ if jq -e '._embedded.mailboxes' $INBOXES_FILE >/dev/null; then
     fetch_data "${SAVED_REPLIES_URL//"{mailboxId}"/$mailbox_id}" ${SAVED_REPLIES_FILE//"{mailboxId}"/$mailbox_id}
 
     # Fetch each saved reply for the mailbox
-    if jq -e '._embedded.entries' ${SAVED_REPLIES_FILE//"{mailboxId}"/$mailbox_id} >/dev/null; then
-      saved_reply_ids=$(jq -r '._embedded.entries[].id' ${SAVED_REPLIES_FILE//"{mailboxId}"/$mailbox_id})
+    if jq -e '.[0].id' ${SAVED_REPLIES_FILE//"{mailboxId}"/$mailbox_id} >/dev/null; then
+      saved_reply_ids=$(jq -r '.[].id' ${SAVED_REPLIES_FILE//"{mailboxId}"/$mailbox_id})
       for saved_reply_id in $saved_reply_ids; do
         fetch_data "${SAVED_REPLY_URL//"{mailboxId}"/$mailbox_id//"{savedReplyId}"/$saved_reply_id}" ${SAVED_REPLY_FILE//"{mailboxId}"/$mailbox_id//"{savedReplyId}"/$saved_reply_id}
       done
