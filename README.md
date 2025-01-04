@@ -10,7 +10,7 @@ Articles: Fetches articles for each collection and category, saving them to arti
 Set your Help Scout Docs API key in the script.
 Run the script to export the data.
 
-# helpscout-saved-replies-export.sh
+# helpscout-inbox-saved-replies-export.sh
 This file contains scripts to export Help Scout data via their API. The scripts fetch collections, categories, articles, inboxes, and saved replies from the Help Scout APIs and save them as JSON files.
 
 ## Script Overview
