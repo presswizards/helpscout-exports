@@ -39,9 +39,9 @@ ACCESS_TOKEN=$(get_access_token)
 fetch_data "$INBOXES_URL" $INBOXES_FILE
 
 # Check if inboxes.json has the correct structure
-if jq -e '.mailboxes' $INBOXES_FILE >/dev/null; then
+if jq -e '._embedded.mailboxes' $INBOXES_FILE >/dev/null; then
   # Fetch saved replies for each mailbox
-  mailbox_ids=$(jq -r '.mailboxes[].id' $INBOXES_FILE)
+  mailbox_ids=$(jq -r '._embedded.mailboxes[].id' $INBOXES_FILE)
   for mailbox_id in $mailbox_ids; do
     fetch_data "${SAVED_REPLIES_URL//"{mailboxId}"/$mailbox_id}" ${SAVED_REPLIES_FILE//"{mailboxId}"/$mailbox_id}
 
