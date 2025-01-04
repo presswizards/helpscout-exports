@@ -13,14 +13,14 @@ BASE_URL="https://docsapi.helpscout.net/v1"
 # Function to call the Help Scout Docs API and return the JSON response
 fetch_data() {
   local endpoint=$1
-  curl -s -u "$API_KEY:x" "$BASE_URL/$endpoint"
+  curl -s -A "Mozilla/5.0" -u "$API_KEY:x" "$BASE_URL/$endpoint"
 }
 
 # Function to create a category in FreeScout
 create_freescout_category() {
   local name=$1
   local description=$2
-  curl -s -X POST "$FREESCOUT_URL/kb/categories" \
+  curl -s -A "Mozilla/5.0" -X POST "$FREESCOUT_URL/kb/categories" \
     -H "Authorization: Bearer $FREESCOUT_API_TOKEN" \
     -H "Content-Type: application/json" \
     -d "{\"name\":\"$name\",\"description\":\"$description\"}"
@@ -31,7 +31,7 @@ create_freescout_article() {
   local category_id=$1
   local title=$2
   local content=$3
-  curl -s -X POST "$FREESCOUT_URL/kb/articles" \
+  curl -s -A "Mozilla/5.0" -X POST "$FREESCOUT_URL/kb/articles" \
     -H "Authorization: Bearer $FREESCOUT_API_TOKEN" \
     -H "Content-Type: application/json" \
     -d "{\"category_id\":\"$category_id\",\"title\":\"$title\",\"content\":\"$content\"}"
