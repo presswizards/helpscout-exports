@@ -46,10 +46,14 @@ if jq -e '.mailboxes' $INBOXES_FILE >/dev/null; then
     fetch_data "${SAVED_REPLIES_URL//"{mailboxId}"/$mailbox_id}" ${SAVED_REPLIES_FILE//"{mailboxId}"/$mailbox_id}
 
     # Fetch each saved reply for the mailbox
-    saved_reply_ids=$(jq -r '.savedReplies[].id' ${SAVED_REPLIES_FILE//"{mailboxId}"/$mailbox_id})
-    for saved_reply_id in $saved_reply_ids; do
-      fetch_data "${SAVED_REPLY_URL//"{mailboxId}"/$mailbox_id//"{savedReplyId}"/$saved_reply_id}" ${SAVED_REPLY_FILE//"{mailboxId}"/$mailbox_id//"{savedReplyId}"/$saved_reply_id}
-    done
+    if jq -e '.savedReplies' ${SAVED_REPLIES_FILE//"{mailboxId}"/$mailbox_id} >/dev/null; then
+      saved_reply_ids=$(jq -r '.savedReplies[].id' ${SAVED_REPLIES_FILE//"{mailboxId}"/$mailbox_id})
+      for saved_reply_id in $saved_reply_ids; do
+        fetch_data "${SAVED_REPLY_URL//"{mailboxId}"/$mailbox_id//"{savedReplyId}"/$saved_reply_id}" ${SAVED_REPLY_FILE//"{mailboxId}"/$mailbox_id//"{savedReplyId}"/$saved_reply_id}
+      done
+    else
+      echo "Error: Invalid structure in ${SAVED_REPLIES_FILE//"{mailboxId}"/$mailbox_id}"
+    fi
   done
 else
   echo "Error: Invalid structure in $INBOXES_FILE"
