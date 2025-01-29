@@ -21,5 +21,5 @@ This file contains scripts to export Help Scout data via their API. The scripts 
 * Saved Replies: Fetches saved replies for each inbox and saves them to saved_replies_{mailboxId}.json.
 
 ## Usage
-* Set your Help Scout API credentials in the script.
+* Set your Help Scout API credentials in the script. You can obtain these by creating a new app in `My Apps` (under `My Profile`) 
 * Run the script to export the desired data.
